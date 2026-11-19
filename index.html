@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#285943">
+  <meta name="description" content="Esercizio interattivo A2–B1 sul futuro semplice e l’oroscopo.">
+  <title>L’oroscopo e il futuro semplice</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__inner">
+      <p class="eyebrow">Haohao Italiano · A2–B1</p>
+      <h1>L’oroscopo e il futuro semplice</h1>
+      <p class="hero__lead">Osserva, riconosci e usa il futuro semplice.</p>
+      <p id="step-progress" class="step-progress" aria-live="polite">Parte 1 di 5</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="lesson-section" id="parte-1">
+      <div class="section-heading">
+        <span class="part-label">Parte 1</span>
+        <h2>Leggi l’oroscopo e trova i verbi</h2>
+        <p class="instruction"><em>Tocca tutti i verbi al futuro semplice. Tocca di nuovo una parola per deselezionarla.</em></p>
+        <p class="translation">点击文中所有简单将来时的动词。再点一次可以取消。</p>
+      </div>
+      <div id="horoscope-grid" class="horoscope-grid" aria-label="Oroscopo dei dodici segni"></div>
+      <div class="page-actions page-actions--end">
+        <button class="primary-button next-button" type="button" data-next="2">Avanti</button>
+      </div>
+    </section>
+
+    <section class="lesson-section lesson-page" id="parte-2" hidden>
+      <div class="section-heading">
+        <span class="part-label">Parte 2</span>
+        <h2>Scrivi l’infinito</h2>
+        <p class="instruction"><em>Scrivi l’infinito di ogni verbo che hai selezionato.</em></p>
+        <p class="translation">写出你选中的每个动词的原形。</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Verbo al futuro semplice</th><th>Infinito</th></tr></thead>
+          <tbody id="infinitive-rows"></tbody>
+        </table>
+      </div>
+      <div id="parts-1-2-feedback" class="feedback" aria-live="polite" hidden></div>
+      <button id="check-selection" class="primary-button check-button" type="button">Controlla</button>
+      <div class="page-actions">
+        <button class="secondary-button back-button" type="button" data-back="1">Indietro</button>
+        <button class="primary-button next-button" type="button" data-next="3">Avanti</button>
+      </div>
+    </section>
+
+    <section class="lesson-section lesson-page" id="parte-3" hidden>
+      <div class="section-heading">
+        <span class="part-label">Parte 3</span>
+        <h2>Guarda il video</h2>
+        <p class="instruction"><em>Guarda il video sul futuro semplice. Poi fai l’esercizio qui sotto.</em></p>
+      </div>
+      <div id="video-container" class="video-container" hidden></div>
+      <p id="video-placeholder" class="soft-note">Il video sarà disponibile qui. 课程视频将在这里显示。</p>
+      <div class="page-actions">
+        <button class="secondary-button back-button" type="button" data-back="2">Indietro</button>
+        <button class="primary-button next-button" type="button" data-next="4">Avanti</button>
+      </div>
+    </section>
+
+    <section class="lesson-section lesson-page" id="parte-4" hidden>
+      <div class="section-heading">
+        <span class="part-label">Parte 4</span>
+        <h2>Completa le frasi con il futuro semplice</h2>
+        <p class="instruction"><em>Completa le frasi con il futuro semplice dei verbi tra parentesi.</em></p>
+        <p class="translation">用括号中动词的简单将来时完成句子。</p>
+      </div>
+      <ol id="conjugation-list" class="exercise-list"></ol>
+      <div id="conjugation-feedback" class="feedback" aria-live="polite" hidden></div>
+      <button id="check-conjugation" class="primary-button check-button" type="button">Controlla</button>
+      <div class="page-actions">
+        <button class="secondary-button back-button" type="button" data-back="3">Indietro</button>
+        <button class="primary-button next-button" type="button" data-next="5">Avanti</button>
+      </div>
+    </section>
+
+    <section class="lesson-section lesson-page" id="parte-5" hidden>
+      <div class="section-heading">
+        <span class="part-label">Parte 5</span>
+        <h2>Ripassiamo il futuro semplice</h2>
+      </div>
+      <div class="completion-message">
+        <p><strong>Complimenti, hai completato la lezione di oggi!</strong></p>
+        <p>你完成了今天的课程！</p>
+      </div>
+      <div class="review-grid">
+        <article class="review-card">
+          <h3>Le desinenze <span>· 词尾</span></h3>
+          <div class="table-wrap compact-table">
+            <table>
+              <thead><tr><th>Persona</th><th>Desinenza</th><th><em>visitare</em></th></tr></thead>
+              <tbody>
+                <tr><td>io</td><td><strong>-ò</strong></td><td>visiter<strong>ò</strong></td></tr>
+                <tr><td>tu</td><td><strong>-ai</strong></td><td>visiter<strong>ai</strong></td></tr>
+                <tr><td>lui / lei</td><td><strong>-à</strong></td><td>visiter<strong>à</strong></td></tr>
+                <tr><td>noi</td><td><strong>-emo</strong></td><td>visiter<strong>emo</strong></td></tr>
+                <tr><td>voi</td><td><strong>-ete</strong></td><td>visiter<strong>ete</strong></td></tr>
+                <tr><td>loro</td><td><strong>-anno</strong></td><td>visiter<strong>anno</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="rule-line"><code>visitare → visiter-</code><br><code>ricevere → ricever-</code><br><code>partire → partir-</code></p>
+          <p class="soft-note"><strong>-are:</strong> la <strong>a</strong> diventa <strong>e</strong>. / <strong>-are</strong> 动词的 <strong>a</strong> 变成 <strong>e</strong>。</p>
+        </article>
+        <article class="review-card">
+          <h3>Alcuni verbi irregolari <span>· 几个不规则动词</span></h3>
+          <div class="table-wrap compact-table">
+            <table>
+              <thead><tr><th>Infinito</th><th>Radice</th><th>Esempio</th></tr></thead>
+              <tbody>
+                <tr><td>essere</td><td>sar-</td><td>sarà</td></tr>
+                <tr><td>avere</td><td>avr-</td><td>avranno</td></tr>
+                <tr><td>venire</td><td>verr-</td><td>verrà</td></tr>
+                <tr><td>rimanere</td><td>rimarr-</td><td>rimarrà</td></tr>
+                <tr><td>fare</td><td>far-</td><td>faremo</td></tr>
+                <tr><td>stare</td><td>star-</td><td>starete</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="accent-note"><strong>Attenzione agli accenti!</strong><br><code>riuscirò</code> e <code>sarà</code> finiscono con una lettera accentata.</p>
+        </article>
+      </div>
+      <div class="page-actions">
+        <button class="secondary-button back-button" type="button" data-back="4">Indietro</button>
+        <button id="restart" class="primary-button" type="button">Ricomincia</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>Haohao Italiano · Imparare, provare, riprovare.</footer>
+  <script src="script.js"></script>
+</body>
+</html>
