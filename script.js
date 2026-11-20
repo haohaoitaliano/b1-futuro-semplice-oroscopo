@@ -29,7 +29,6 @@ const answerMap = new Map([
 const examples = new Map([["sarà", "essere"], ["avrai", "avere"]]);
 let selected = new Set();
 let inputValues = new Map();
-let checkedSelection = false;
 let currentPart = 1;
 
 const conjugations = [
@@ -91,19 +90,29 @@ function toggleWord(button) {
   const id = button.dataset.position;
   document.querySelectorAll("#infinitive-rows input").forEach(input => inputValues.set(input.dataset.id, input.value));
   selected.has(id) ? selected.delete(id) : selected.add(id);
-  checkedSelection = false;
   document.querySelector("#parts-1-2-feedback").hidden = true;
   updateWordClasses();
   renderInfinitiveRows();
 }
 
 function updateWordClasses() {
+  let correctCount = 0;
   document.querySelectorAll(".word:not(.example)").forEach(button => {
     const isSelected = selected.has(button.dataset.position);
-    button.classList.toggle("selected", isSelected);
-    button.classList.remove("correct", "incorrect", "missed");
+    const isAnswer = answerMap.has(button.dataset.word);
+    button.classList.remove("selected", "correct", "incorrect", "missed");
+    button.classList.toggle("correct", isSelected && isAnswer);
+    button.classList.toggle("incorrect", isSelected && !isAnswer);
+    if (isSelected && isAnswer) correctCount++;
     button.setAttribute("aria-pressed", String(isSelected));
   });
+  const progress = document.querySelector("#selection-progress");
+  if (progress) {
+    progress.textContent = correctCount === answerMap.size
+      ? "15 个都找到了！"
+      : `已找对 ${correctCount}/${answerMap.size} 个，还差 ${answerMap.size - correctCount} 个`;
+    progress.classList.toggle("is-complete", correctCount === answerMap.size);
+  }
 }
 
 function getSelectedButtons() {
@@ -123,7 +132,7 @@ function renderInfinitiveRows() {
   tbody.innerHTML = "";
   addExampleRow(tbody, "sarà", "essere");
   addExampleRow(tbody, "avrai", "avere");
-  getSelectedButtons().forEach(button => {
+  getSelectedButtons().filter(button => answerMap.has(button.dataset.word)).forEach(button => {
     const id = button.dataset.position;
     const row = document.createElement("tr");
     row.dataset.id = id;
@@ -148,17 +157,8 @@ function renderInfinitiveRows() {
 }
 
 function checkPartsOneAndTwo() {
-  checkedSelection = true;
-  let found = 0;
   let infinitivesCorrect = 0;
-  document.querySelectorAll(".word:not(.example)").forEach(button => {
-    const chosen = selected.has(button.dataset.position);
-    const isAnswer = answerMap.has(button.dataset.word);
-    button.classList.remove("selected", "correct", "incorrect", "missed");
-    if (chosen && isAnswer) { button.classList.add("correct"); found++; }
-    else if (chosen) button.classList.add("incorrect");
-    else if (isAnswer) button.classList.add("missed");
-  });
+  const selectedCorrectCount = getSelectedButtons().filter(button => answerMap.has(button.dataset.word)).length;
 
   document.querySelectorAll("#infinitive-rows tr[data-id]").forEach(row => {
     const input = row.querySelector("input");
@@ -179,7 +179,9 @@ function checkPartsOneAndTwo() {
   });
 
   const feedback = document.querySelector("#parts-1-2-feedback");
-  feedback.innerHTML = `<p><strong>Verbi trovati: ${found}/15</strong></p><p><strong>Infiniti corretti: ${infinitivesCorrect}/15</strong></p><p>Verde = corretto · rosso = selezione errata · giallo = verbo da trovare.</p>`;
+  feedback.innerHTML = selectedCorrectCount === 0
+    ? `<p><strong>Torna alla Parte 1 e trova almeno un verbo.</strong></p>`
+    : `<p><strong>Infiniti corretti: ${infinitivesCorrect}/${selectedCorrectCount}</strong></p><p>Correggi gli infiniti evidenziati e controlla di nuovo.</p>`;
   feedback.hidden = false;
 }
 
@@ -292,7 +294,6 @@ function setupVideo() {
 function restart() {
   selected = new Set();
   inputValues = new Map();
-  checkedSelection = false;
   renderHoroscope();
   renderInfinitiveRows();
   renderConjugations();
